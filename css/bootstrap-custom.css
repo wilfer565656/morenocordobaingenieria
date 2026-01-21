@@ -1,0 +1,133 @@
+/* Custom Bootstrap overrides */
+:root {
+    --primary-color: #2a5c82; /* Azul corporativo */
+    --secondary-color: #f2a71b; /* Naranja corporativo */
+    --accent-color: #1e3a5f; /* Azul oscuro */
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --gray-color: #6c757d;
+    --light-gray: #e9ecef;
+    --success-color: #28a745;
+    --border-radius: 12px;
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s ease;
+}
+
+/* Typography */
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: var(--dark-color);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+
+/* Custom button styles */
+.btn {
+    border-radius: 50px;
+    padding: 12px 30px;
+    font-weight: 500;
+    transition: var(--transition);
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(42, 92, 130, 0.2);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(42, 92, 130, 0.2);
+}
+
+/* Form controls */
+.form-control {
+    border-radius: 8px;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(42, 92, 130, 0.25);
+}
+
+/* Custom navbar */
+.navbar {
+    padding: 15px 0;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.navbar.scrolled {
+    padding: 10px 0;
+}
+
+.navbar-brand {
+    padding: 0;
+}
+
+.nav-link {
+    font-weight: 500;
+    margin: 0 10px;
+    color: var(--dark-color) !important;
+    transition: var(--transition);
+    position: relative;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-color) !important;
+}
+
+.nav-link:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s;
+}
+
+.nav-link:hover:after, .nav-link.active:after {
+    width: 100%;
+}
+
+.nav-link.btn-contact {
+    background-color: var(--primary-color);
+    color: white !important;
+    border-radius: 50px;
+    padding: 8px 20px !important;
+    margin-left: 15px;
+}
+
+.nav-link.btn-contact:hover {
+    background-color: var(--accent-color);
+    color: white !important;
+}
+
+.nav-link.btn-contact:after {
+    display: none;
+}
