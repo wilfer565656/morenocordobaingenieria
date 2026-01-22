@@ -107,3 +107,173 @@ const yearElements = document.querySelectorAll('.current-year');
 yearElements.forEach(el => {
     el.textContent = currentYear;
 });
+
+// ... Código anterior ...
+
+// Image lazy loading
+function initLazyLoading() {
+    const lazyImages = document.querySelectorAll('img[data-src]');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+        
+        lazyImages.forEach(img => imageObserver.observe(img));
+    } else {
+        // Fallback for older browsers
+        lazyImages.forEach(img => {
+            img.src = img.dataset.src;
+        });
+    }
+}
+
+// Image gallery modal
+function initGalleryModal() {
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const modal = document.createElement('div');
+    modal.className = 'image-modal';
+    modal.innerHTML = `
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <img src="" alt="" class="modal-image">
+            <div class="modal-caption"></div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    
+    galleryItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const imgSrc = this.querySelector('img').src;
+            const caption = this.querySelector('.gallery-overlay h5').textContent;
+            
+            modal.querySelector('.modal-image').src = imgSrc;
+            modal.querySelector('.modal-caption').textContent = caption;
+            modal.classList.add('active');
+        });
+    });
+    
+    modal.querySelector('.modal-close').addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+    
+    modal.querySelector('.modal-overlay').addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+}
+
+// Testimonials slider
+function initTestimonialsSlider() {
+    const testimonials = document.querySelectorAll('.testimonial-card');
+    let currentIndex = 0;
+    
+    function showTestimonial(index) {
+        testimonials.forEach((testimonial, i) => {
+            testimonial.style.opacity = i === index ? '1' : '0.5';
+            testimonial.style.transform = i === index ? 'scale(1.05)' : 'scale(1)';
+        });
+    }
+    
+    // Auto rotate testimonials
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % testimonials.length;
+        showTestimonial(currentIndex);
+    }, 5000);
+    
+    // Initial display
+    showTestimonial(currentIndex);
+}
+
+// Initialize all functions when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Existing functions
+    initNavbarScroll();
+    initSmoothScroll();
+    initActiveNav();
+    initContactForm();
+    initAnimationObserver();
+    
+    // New functions
+    initLazyLoading();
+    initGalleryModal();
+    initTestimonialsSlider();
+});
+
+// Add CSS for modal
+const modalStyles = `
+.image-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-modal.active {
+    display: flex;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    position: relative;
+    z-index: 2;
+    max-width: 90%;
+    max-height: 90%;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.modal-image {
+    max-width: 100%;
+    max-height: 70vh;
+    display: block;
+}
+
+.modal-caption {
+    padding: 20px;
+    text-align: center;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+`;
+
+// Add modal styles to document
+const styleSheet = document.createElement('style');
+styleSheet.textContent = modalStyles;
+document.head.appendChild(styleSheet);
